@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:planetary_forecast/providers/earth_weather_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:planetary_forecast/models/earth_weather.dart';
 import 'package:planetary_forecast/providers/mars_weather_provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -16,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Planetary Forecast"),
+        title: const Text("Planetary Forecast"),
       ),
       body: Column(
         children: [
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: InputDecoration(
               labelText: 'Enter a city name',
               suffixIcon: IconButton(
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
                 onPressed: () {
                   Provider.of<EarthWeatherProvider>(context, listen: false)
                       .fetchEarthWeather(_cityController.text);
@@ -35,17 +36,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Consumer<EarthWeatherProvider>(builder: (context, provder, child) {
             if (provder.isLoading) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (provder.errorMessage.isNotEmpty) {
               return Text(provder.errorMessage);
             } else if (provder.earthWeather != null) {
               return Text(provder.earthWeather.toString());
             } else {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
           }),
           ElevatedButton(
-             child: Text("Fetch Mars weather"),
+             child: const Text("Fetch Mars weather"),
               onPressed: () {
                 Provider.of<MarsWeatherProvider>(context, listen: false).fetchMarsWeather();
               },
@@ -53,13 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
              Consumer<MarsWeatherProvider>(
               builder: (context, provider, child) {
                 if (provider.isLoading) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (provider.errorMessage.isNotEmpty) {
                   return Text(provider.errorMessage);
                 } else if (provider.marsWeather != null) {
                   return Text(provider.marsWeather.toString());
                 } else {
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 }
               }) ,
         ],
