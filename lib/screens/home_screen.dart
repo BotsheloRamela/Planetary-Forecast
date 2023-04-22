@@ -14,6 +14,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Planetary Forecast"),
+      ),
+      body: Column(
+        children: [
+          TextField(
+            controller: _cityController,
+            decoration: InputDecoration(
+              labelText: 'Enter a city name',
+              suffixIcon: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  Provider.of<EarthWeatherProvider>(context, listen: false)
+                      .fetchEarthWeather(_cityController.text);
+                },
+              ),
+            ),
+          ),
+          Consumer<EarthWeatherProvider>(builder: (context, provder, child) {
+            if (provder.isLoading) {
+              return CircularProgressIndicator();
+            } else if (provder.errorMessage.isNotEmpty) {
+              return Text(provder.errorMessage);
+            } else if (provder.earthWeather != null) {
+              return Text(provder.earthWeather.toString());
+            } else {
+              return SizedBox.shrink();
+            }
+          }),
+        ],
+      ),
+    );
   }
 }
