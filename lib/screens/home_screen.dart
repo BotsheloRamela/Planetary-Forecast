@@ -44,6 +44,24 @@ class _HomeScreenState extends State<HomeScreen> {
               return SizedBox.shrink();
             }
           }),
+          ElevatedButton(
+             child: Text("Fetch Mars weather"),
+              onPressed: () {
+                Provider.of<MarsWeatherProvider>(context, listen: false).fetchMarsWeather();
+              },
+             ),
+             Consumer<MarsWeatherProvider>(
+              builder: (context, provider, child) {
+                if (provider.isLoading) {
+                  return CircularProgressIndicator();
+                } else if (provider.errorMessage.isNotEmpty) {
+                  return Text(provider.errorMessage);
+                } else if (provider.marsWeather != null) {
+                  return Text(provider.marsWeather.toString());
+                } else {
+                  return SizedBox.shrink();
+                }
+              }) ,
         ],
       ),
     );
