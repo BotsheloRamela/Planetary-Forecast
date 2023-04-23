@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:planetary_forecast/models/earth_weather.dart';
+import 'package:planetary_forecast/models/weather.dart';
 import '../services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               FutureBuilder(
                 builder: (context, snapshot) {
                   if (snapshot != null) {
-                    EarthWeather? weather = snapshot.data;
+                    Weather? weather = snapshot.data;
                     if (weather == null) {
                       return const Text("Error getting weather");
                     } else {
@@ -81,14 +81,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const CircularProgressIndicator();
                   }
                 },
-                future: ApiService.fetchEarthWeather("Johannesburg"),
+                future: ApiService.fetchWeather("Johannesburg"),
               ),
             ],
           ),
         ));
   }
 
-  Widget weatherData(EarthWeather weather) {
+  Widget weatherData(Weather weather) {
     cityName = weather.cityName;
     temp = weather.temperature.toInt().toString();
     return Container(
