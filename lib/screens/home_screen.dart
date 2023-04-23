@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:planetary_forecast/models/earth_weather.dart';
+import 'package:planetary_forecast/models/planet_weather.dart';
 import '../services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -50,4 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget planetWeatherBox(PlanetWeather weather) {
+    return Column(
+      children: <Widget>[
+        Text(weather.name),
+        Text(weather.temperature),
+        Text(weather.mass),
+      ],
+    );
+  }
 }
