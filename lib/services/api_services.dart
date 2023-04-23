@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:planetary_forecast/models/earth_weather.dart';
-import 'package:planetary_forecast/models/Planet_weather.dart';
+import '../models/planet_weather.dart';
 import 'api_key.dart';
 
 class ApiService {
@@ -30,7 +30,7 @@ class ApiService {
     final url = '$_ninjaApiUrl$planet';
     final response = await http.get(
       Uri.parse(url),
-      headers: {'X-Api-Key': ninjaApiKey});
+      headers: {'X-Api-Key': _ninjaApiKey});
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
