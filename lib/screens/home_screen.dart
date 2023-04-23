@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planetary_forecast/models/weather.dart';
 import '../services/api_services.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static String cityName = '';
   static String temp = '';
   static String main = '';
-  static Icon _icon = const Icon(Icons.sunny);
+  String date = DateFormat('MMM d, h:mm a').format(DateTime.now()).toString();
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Today, $date",
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
@@ -74,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(
                           "$temp\u2103",
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 50),
+                              color: Colors.white, fontSize: 60),
                           textAlign: TextAlign.left,
                         )
                       ],
