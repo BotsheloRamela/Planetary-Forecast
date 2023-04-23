@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cityController = TextEditingController();
+  static String cityName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +20,39 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("Planetary Forecast"),
         ),
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
             image: NetworkImage(
                 'https://images.unsplash.com/photo-1496016943515-7d33598c11e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80'),
             fit: BoxFit.cover,
           )),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_pin,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(
+                          cityName,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
               FutureBuilder(
                 builder: (context, snapshot) {
                   if (snapshot != null) {
@@ -35,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (weather == null) {
                       return const Text("Error getting weather");
                     } else {
+                      cityName = weather.cityName;
                       return weatherData(weather);
                     }
                   } else {
