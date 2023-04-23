@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
   static String cityName = '';
   static String temp = '';
   static String main = '';
@@ -146,6 +146,26 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           )
         ],
+      ),
+    );
+  }
+
+  Widget searchBar() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: TextField(
+        autocorrect: true,
+        controller: cityController,
+        decoration: InputDecoration(
+          hintText: "Search a city...",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          suffixIcon: IconButton(
+            onPressed: () => cityController.clear(),
+            icon: const Icon(Icons.clear),
+          ),
+        ),
       ),
     );
   }
