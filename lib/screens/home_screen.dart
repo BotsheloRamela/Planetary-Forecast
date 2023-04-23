@@ -24,19 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("Planetary Forecast"),
         ),
         body: Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-            image: NetworkImage(
-                'https://images.unsplash.com/photo-1496016943515-7d33598c11e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80'),
-            fit: BoxFit.cover,
-          )),
+          decoration: const BoxDecoration(color: Colors.black87),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 padding: const EdgeInsets.all(20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       date,
@@ -45,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 10,
                     ),
+                    //Location
                     Row(
                       children: [
                         const Icon(
@@ -65,27 +60,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            weatherIcon(),
-                            Text(
-                              "It's $main",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 20),
-                            ),
-                          ],
+                        weatherIcon(),
+                        const SizedBox(
+                          height: 20,
                         ),
                         Text(
-                          "$temp\u2103",
+                          main,
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 60),
-                          textAlign: TextAlign.left,
-                        )
+                              color: Colors.white, fontSize: 20),
+                        ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "$temp\u2103",
+                      style: const TextStyle(color: Colors.white, fontSize: 60),
+                      textAlign: TextAlign.left,
                     )
                   ],
                 ),
@@ -118,26 +112,26 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 200,
       alignment: Alignment.bottomCenter,
       decoration: const BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(20),
-            topLeft: Radius.circular(20),
-          )),
+        topRight: Radius.circular(20),
+        topLeft: Radius.circular(20),
+      )),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          // Text(weather.cityName),
-          const Text("Weather Today"),
-          const SizedBox(
-            height: 70,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(weather.description),
-              Text(weather.temperature.toString()),
-              Text(weather.humidity.toString()),
-              Text(weather.windSpeed.toString())
+              Text(
+                weather.description,
+                style: const TextStyle(color: Colors.white),
+              ),
+              Text(weather.temperature.toString(),
+                  style: const TextStyle(color: Colors.white)),
+              Text(weather.humidity.toString(),
+                  style: const TextStyle(color: Colors.white)),
+              Text(weather.windSpeed.toString(),
+                  style: const TextStyle(color: Colors.white))
             ],
           )
         ],
@@ -172,8 +166,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Image.network(
       imgURL,
-      width: 50,
-      height: 50,
+      width: 150,
+      height: 150,
     );
   }
 }
