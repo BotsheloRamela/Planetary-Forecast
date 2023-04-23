@@ -1,13 +1,13 @@
 # WeatherNow
 
-WeatherNow is a cross-platform weather application that provides real-time weather data for cities on Earth. This app is built using Flutter and it integrates with the OpenWeatherMap API to fetch weather data.
+WeatherNow is a cross-platform weather application that provides real-time weather data for cities on Earth. This app is built using Flutter and it integrates with the OpenWeatherMap API to fetch weather data. In addition to fetching weather data, the app now uses the Unsplash API to get random background images based on the current weather.
 
 ## Features
 
 - Get real-time weather data for any city on Earth.
 - View current weather conditions, temperature, humidity, wind speed, and more.
 - Clean and intuitive user interface.
-- Accurate weather data powered by state management using the Provider package.
+- View beautiful background images based on the current weather conditions.
 
 ## Getting Started
 
@@ -43,6 +43,14 @@ WeatherNow uses the OpenWeatherMap API for weather data. You will need to obtain
 
 ```
     OPEN_WEATHER_MAP_API_KEY=your-api-key
+```
+
+Replace your-api-key with your actual API key.
+
+Unsplash API: You will need to obtain an API key to use this app. Once you have obtained the API key, create a file called .env in the root directory of the project and add the following line:
+
+```
+    UNSPLASH_API_KEY=your-api-key
 ```
 
 Replace your-api-key with your actual API key.
