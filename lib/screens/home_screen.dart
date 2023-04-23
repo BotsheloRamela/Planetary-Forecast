@@ -16,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static String temp = '';
   static String main = '';
   String date = DateFormat('MMM d, h:mm a').format(DateTime.now()).toString();
+  String bgImageUrl =
+      'https://images.unsplash.com/photo-1668995215649-d37e4c4ceec0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=410&q=80';
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("Planetary Forecast"),
         ),
         body: Container(
-          decoration: const BoxDecoration(color: Colors.black87),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(bgImageUrl),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.5), BlendMode.darken))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -62,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Column(
                       children: [
-                        weatherIcon(),
+                        // weatherIcon(),
                         const SizedBox(
                           height: 20,
                         ),
@@ -143,8 +150,6 @@ class _HomeScreenState extends State<HomeScreen> {
     String imgURL = '';
     switch (main) {
       case 'Sunny':
-        imgURL = 'https://img.icons8.com/ios/256/sun.png';
-        break;
       case "Clear":
         imgURL = 'http://openweathermap.org/img/wn/01d@2x.png';
         break;
