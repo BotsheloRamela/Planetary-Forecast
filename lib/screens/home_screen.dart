@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         
         appBar: AppBar(
-          title: const Text("Planetary Forecast"),
+          title: const Text("WeatherNow"),
         ),
         body: Container(
           decoration: BoxDecoration(
