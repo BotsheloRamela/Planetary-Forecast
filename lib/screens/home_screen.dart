@@ -32,75 +32,88 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: const Text("WeatherNow"),
         ),
-        body: Container(
-          // color: Colors.black87,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(backgroundImageUrl()),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.5), BlendMode.darken))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    searchBar(),
-                    //Location
+        body: FutureBuilder<String>(
+            future: backgroundImageUrl(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                  // color: Colors.black87,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(snapshot.data.toString()),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.5),
+                              BlendMode.darken))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            searchBar(),
+                            //Location
 
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    Text(
-                      "$temp\u2103",
-                      style: const TextStyle(color: Colors.white, fontSize: 80),
-                      textAlign: TextAlign.left,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      cityName,
-                      style: const TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    Column(
-                      children: [
-                        const SizedBox(
-                          height: 30,
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            Text(
+                              "$temp\u2103",
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 80),
+                              textAlign: TextAlign.left,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              cityName,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
+                            Column(
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Text(
+                                  main,
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        Text(
-                          main,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  if (snapshot != null) {
-                    Weather? weather = snapshot.data;
-                    if (weather == null) {
-                      return const Text("Error getting weather");
-                    } else {
-                      return weatherData(weather);
-                    }
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
-                future: ApiService.fetchWeather(searchText),
-              ),
-            ],
-          ),
-        ));
+                      ),
+                      FutureBuilder(
+                        builder: (context, snapshot) {
+                          if (snapshot != null) {
+                            Weather? weather = snapshot.data;
+                            if (weather == null) {
+                              return const Text("Error getting weather");
+                            } else {
+                              return weatherData(weather);
+                            }
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
+                        },
+                        future: ApiService.fetchWeather(searchText),
+                      ),
+                    ],
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              } else {
+                return const CircularProgressIndicator();
+              }
+            }));
   }
 
   Widget weatherData(Weather weather) {
@@ -198,6 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 main = weather.main;
               });
             }
+            backgroundImageUrl();
           });
           cityController.clear();
         },
@@ -205,38 +219,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  String backgroundImageUrl() {
+  Future<String> backgroundImageUrl() async {
     String url = '';
-    switch (main) {
-      case "Thunderstorm":
-        url =
-            'https://images.unsplash.com/photo-1654232038022-67df6dcd1b10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80';
-        break;
-      case "Rain":
-        url =
-            'https://images.unsplash.com/photo-1544365558-35aa4afcf11f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80';
-        break;
-      case "Clear":
-        url =
-            'https://images.unsplash.com/photo-1641829382069-7ce996d461af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80';
-        break;
-      case "Sunny":
-        url =
-            'https://images.unsplash.com/photo-1447601932606-2b63e2e64331?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=379&q=80';
-        break;
-      case "Drizzle":
-        url =
-            'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80';
-        break;
-      case "Snow":
-        url =
-            'https://images.unsplash.com/photo-1551582045-6ec9c11d8697?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80';
-        break;
-      case "Clouds":
-      default:
-        url = 'https://images.unsplash.com/photo-1560837616-fee1f3d8753a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80';
-        break;
-    }
+
+    url = await ApiService.fetchBackgroundImage("$main weather");
     return url;
   }
 }
