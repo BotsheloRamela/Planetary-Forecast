@@ -19,6 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
   String bgImageUrl =
       'https://images.unsplash.com/photo-1668995215649-d37e4c4ceec0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=410&q=80';
 
+  void _updateSearchText(String value) {
+    setState(() {
+      cityName = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,12 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("WeatherNow"),
         ),
         body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(bgImageUrl),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.5), BlendMode.darken))),
+          color: Colors.black87,
+          // decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //         image: NetworkImage(bgImageUrl),
+          //         fit: BoxFit.cover,
+          //         colorFilter: ColorFilter.mode(
+          //             Colors.black.withOpacity(0.5), BlendMode.darken))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -42,18 +49,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 10,
                     ),
+                    searchBar(),
                     //Location
-                    Text(
-                      cityName,
-                      style: const TextStyle(color: Colors.white, fontSize: 20),
-                    ),
+
                     const SizedBox(
-                      height: 70,
+                      height: 50,
                     ),
                     Text(
                       "$temp\u2103",
                       style: const TextStyle(color: Colors.white, fontSize: 80),
                       textAlign: TextAlign.left,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      cityName,
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     Column(
                       children: [
@@ -157,15 +169,26 @@ class _HomeScreenState extends State<HomeScreen> {
         autocorrect: true,
         controller: cityController,
         decoration: InputDecoration(
-          hintText: "Search a city...",
+          iconColor: Colors.white,
+          hintStyle: const TextStyle(color: Colors.white),
+          hintText: "Search for a city...",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
           suffixIcon: IconButton(
-            onPressed: () => cityController.clear(),
-            icon: const Icon(Icons.clear),
+            onPressed: () {
+              setState(() {
+                cityName = cityController.text;
+              });
+            },
+            icon: const Icon(Icons.search),
           ),
         ),
+        onSubmitted: (String value) {
+          setState(() {
+            cityName = cityController.text;
+          });
+        },
       ),
     );
   }
