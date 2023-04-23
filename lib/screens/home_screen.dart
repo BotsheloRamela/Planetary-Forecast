@@ -15,9 +15,16 @@ class _HomeScreenState extends State<HomeScreen> {
   static String cityName = '';
   static String temp = '';
   static String main = '';
-  String bgImageUrl =
-      'https://images.unsplash.com/photo-1668995215649-d37e4c4ceec0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=410&q=80';
   String searchText = 'Johannesburg';
+  late String bgImageUrl = '';
+  String img =
+      'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80';
+
+  @override
+  void initState() {
+    super.initState();
+    bgImageUrl = ApiService.fetchBackgroundImage(cityName).toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("WeatherNow"),
         ),
         body: Container(
-          color: Colors.black87,
-          // decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //         image: NetworkImage(bgImageUrl),
-          //         fit: BoxFit.cover,
-          //         colorFilter: ColorFilter.mode(
-          //             Colors.black.withOpacity(0.5), BlendMode.darken))),
+          // color: Colors.black87,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(backgroundImageUrl()),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.5), BlendMode.darken))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -196,5 +203,40 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+  }
+
+  String backgroundImageUrl() {
+    String url = '';
+    switch (main) {
+      case "Thunderstorm":
+        url =
+            'https://images.unsplash.com/photo-1654232038022-67df6dcd1b10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80';
+        break;
+      case "Rain":
+        url =
+            'https://images.unsplash.com/photo-1544365558-35aa4afcf11f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80';
+        break;
+      case "Clear":
+        url =
+            'https://images.unsplash.com/photo-1641829382069-7ce996d461af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80';
+        break;
+      case "Sunny":
+        url =
+            'https://images.unsplash.com/photo-1447601932606-2b63e2e64331?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=379&q=80';
+        break;
+      case "Drizzle":
+        url =
+            'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80';
+        break;
+      case "Snow":
+        url =
+            'https://images.unsplash.com/photo-1551582045-6ec9c11d8697?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80';
+        break;
+      case "Clouds":
+      default:
+        url = 'https://images.unsplash.com/photo-1560837616-fee1f3d8753a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80';
+        break;
+    }
+    return url;
   }
 }

@@ -11,7 +11,7 @@ class ApiService {
 
   static const String _unsplashApiAccessKey = unsplashApiAccessKey;
   static const String _unsplashApiUrl =
-      'https://api.unsplash.com/search/photos?page=1&query=';
+      'https://api.unsplash.com/photos/random?query=';
 
   static Future<Weather> fetchWeather(String cityName) async {
     final url =
@@ -26,12 +26,12 @@ class ApiService {
     }
   }
 
-  static Future<BackgroundImage> fetchBackgroundImage(String weather) async {
+  static Future<String> fetchBackgroundImage(String weather) async {
     final url = '$_unsplashApiUrl$weather&client_id=$_unsplashApiAccessKey';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      return BackgroundImage.fromJson(json);
+      return json['urls']['regular'];
     } else {
       throw Exception('Failed to fetch background image');
     }
