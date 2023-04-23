@@ -5,8 +5,8 @@ import '../services/api_services.dart';
 
 class EarthWeatherProvider with ChangeNotifier {
   late EarthWeather _earthWeather;
-  late bool _isLoading;
-  late String _errorMessage;
+  late bool _isLoading = false;
+  late String _errorMessage = '';
 
   EarthWeather get earthWeather => _earthWeather;
   bool get isLoading => _isLoading;

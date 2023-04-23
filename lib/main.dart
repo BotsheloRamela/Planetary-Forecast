@@ -14,16 +14,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider<EarthWeatherProvider>(
-          create: (_) => EarthWeatherProvider()),
-      ChangeNotifierProvider<MarsWeatherProvider>(
-          create: (_) => MarsWeatherProvider())
-    ], child: MaterialApp(
+    return MaterialApp(
       title: 'Planetary Forecast',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple
       ),
-      home: const HomeScreen(),));
+      home: const HomeScreen(),);
   }
 }

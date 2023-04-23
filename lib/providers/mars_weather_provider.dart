@@ -5,8 +5,8 @@ import '../models/mars_weather.dart';
 
 class MarsWeatherProvider with ChangeNotifier {
   late MarsWeather _marsWeather;
-  late bool _isLoading;
-  late String _errorMessage;
+  late bool _isLoading = false;
+  late String _errorMessage = '';
 
   MarsWeather get marsWeather => _marsWeather;
   bool get isLoading => _isLoading;

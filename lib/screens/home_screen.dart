@@ -1,7 +1,7 @@
+
 import 'package:flutter/material.dart';
-import 'package:planetary_forecast/providers/earth_weather_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:planetary_forecast/providers/mars_weather_provider.dart';
+import 'package:planetary_forecast/models/earth_weather.dart';
+import '../services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,55 +16,38 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Planetary Forecast"),
-      ),
-      body: Column(
-        children: [
-          TextField(
-            controller: _cityController,
-            decoration: InputDecoration(
-              labelText: 'Enter a city name',
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {
-                  Provider.of<EarthWeatherProvider>(context, listen: false)
-                      .fetchEarthWeather(_cityController.text);
-                },
-              ),
-            ),
-          ),
-          Consumer<EarthWeatherProvider>(builder: (context, provder, child) {
-            if (provder.isLoading) {
-              return const CircularProgressIndicator();
-            } else if (provder.errorMessage.isNotEmpty) {
-              return Text(provder.errorMessage);
-            } else if (provder.earthWeather != null) {
-              return Text(provder.earthWeather.toString());
-            } else {
-              return const SizedBox.shrink();
-            }
-          }),
-          ElevatedButton(
-             child: const Text("Fetch Mars weather"),
-              onPressed: () {
-                Provider.of<MarsWeatherProvider>(context, listen: false).fetchMarsWeather();
-              },
-             ),
-             Consumer<MarsWeatherProvider>(
-              builder: (context, provider, child) {
-                if (provider.isLoading) {
-                  return const CircularProgressIndicator();
-                } else if (provider.errorMessage.isNotEmpty) {
-                  return Text(provider.errorMessage);
-                } else if (provider.marsWeather != null) {
-                  return Text(provider.marsWeather.toString());
+        appBar: AppBar(
+          title: const Text("Planetary Forecast"),
+        ),
+        body: Center(
+          child: FutureBuilder(
+            builder: (context, snapshot) {
+              if (snapshot != null) {
+                EarthWeather? weather = snapshot.data;
+                if (weather == null) {
+                  return const Text("Error getting weather");
                 } else {
-                  return const SizedBox.shrink();
+                  return earthWeatherBox(weather);
                 }
-              }) ,
-        ],
-      ),
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+            future: ApiService.fetchEarthWeather("Johannesburg"),
+          ),
+        ));
+  }
+
+  Widget earthWeatherBox(EarthWeather weather) {
+    return Column(
+      children: <Widget>[
+        Text(weather.cityName),
+        Text(weather.description),
+        Text("Temp: ${weather.temperature}"),
+        Text("Humidity: ${weather.humidity}"),
+        Text("Wind Speed: ${weather.windSpeed}")
+      ],
     );
   }
+
 }
