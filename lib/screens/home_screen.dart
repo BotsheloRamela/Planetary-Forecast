@@ -170,18 +170,24 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(10),
           ),
           suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                searchText = cityController.text;
-              });
-            },
+            onPressed: () {},
             icon: const Icon(Icons.search),
           ),
         ),
-        onSubmitted: (String value) {
+        onSubmitted: (String value) async {
+          final newSearchText = cityController.text;
+          final weather = await ApiService.fetchWeather(newSearchText);
           setState(() {
-            searchText = cityController.text;
+            if (newSearchText.isNotEmpty) {
+              setState(() {
+                searchText = newSearchText;
+                cityName = weather.cityName;
+                temp = weather.temperature.toString();
+                main = weather.main;
+              });
+            }
           });
+          cityController.clear();
         },
       ),
     );
