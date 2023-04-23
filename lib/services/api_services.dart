@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:planetary_forecast/models/weather.dart';
+import '../models/background_image.dart';
 import 'api_key.dart';
 
 class ApiService {
@@ -30,7 +31,7 @@ class ApiService {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      return BackgrounImage.fromJson(json);
+      return BackgroundImage.fromJson(json);
     } else {
       throw Exception('Failed to fetch background image');
     }
