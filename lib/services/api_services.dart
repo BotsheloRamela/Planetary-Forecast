@@ -31,7 +31,8 @@ class ApiService {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      return json['urls']['regular'];
+      final imgUrl = json['urls']['full'];
+      return imgUrl.toString();
     } else {
       throw Exception('Failed to fetch background image');
     }
