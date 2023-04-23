@@ -20,21 +20,40 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("Planetary Forecast"),
         ),
         body: Center(
-          child: FutureBuilder(
+          child: Column(
+            children: [
+              FutureBuilder(
+              builder: (context, snapshot) {
+                if (snapshot != null) {
+                  EarthWeather? weather = snapshot.data;
+                  if (weather == null) {
+                    return const Text("Error getting weather");
+                  } else {
+                    return earthWeatherBox(weather);
+                  }
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+              future: ApiService.fetchEarthWeather("Johannesburg"),
+            ),
+            FutureBuilder(
             builder: (context, snapshot) {
               if (snapshot != null) {
-                EarthWeather? weather = snapshot.data;
+                PlanetWeather? weather = snapshot.data;
                 if (weather == null) {
                   return const Text("Error getting weather");
                 } else {
-                  return earthWeatherBox(weather);
+                  return planetWeatherBox(weather);
                 }
               } else {
                 return const CircularProgressIndicator();
               }
             },
-            future: ApiService.fetchEarthWeather("Johannesburg"),
+            future: ApiService.fetchPlanetWeather("Mars"),
           ),
+            ],
+          )
         ));
   }
 
