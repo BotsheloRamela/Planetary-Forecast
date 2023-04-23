@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:planetary_forecast/models/earth_weather.dart';
-import 'package:planetary_forecast/models/planet_weather.dart';
 import '../services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,40 +19,21 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("Planetary Forecast"),
         ),
         body: Center(
-          child: Column(
-            children: [
-              FutureBuilder(
-              builder: (context, snapshot) {
-                if (snapshot != null) {
-                  EarthWeather? weather = snapshot.data;
-                  if (weather == null) {
-                    return const Text("Error getting weather");
-                  } else {
-                    return earthWeatherBox(weather);
-                  }
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-              future: ApiService.fetchEarthWeather("Johannesburg"),
-            ),
-            FutureBuilder(
+          child: FutureBuilder(
             builder: (context, snapshot) {
               if (snapshot != null) {
-                PlanetWeather? weather = snapshot.data;
+                EarthWeather? weather = snapshot.data;
                 if (weather == null) {
                   return const Text("Error getting weather");
                 } else {
-                  return planetWeatherBox(weather);
+                  return earthWeatherBox(weather);
                 }
               } else {
                 return const CircularProgressIndicator();
               }
             },
-            future: ApiService.fetchPlanetWeather("Mars"),
+            future: ApiService.fetchEarthWeather("Johannesburg"),
           ),
-            ],
-          )
         ));
   }
 
@@ -69,13 +49,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget planetWeatherBox(PlanetWeather weather) {
-    return Column(
-      children: <Widget>[
-        Text(weather.name),
-        Text(weather.temperature.toString()),
-        Text(weather.mass.toString()),
-      ],
-    );
-  }
 }
