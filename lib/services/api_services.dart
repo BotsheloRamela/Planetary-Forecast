@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:planetary_forecast/models/earth_weather.dart';
-import 'package:planetary_forecast/models/mars_weather.dart';
+import 'package:planetary_forecast/models/Planet_weather.dart';
 import 'api_key.dart';
 
 class ApiService {
@@ -9,9 +9,9 @@ class ApiService {
   static const String _openWeatherMapApiUrl =
       'https://api.openweathermap.org/data/2.5/weather';
 
-  static const String _nasaApiKey = nasaApiKey;
-  static const String _nasaApiUrl =
-      'https://api.nasa.gov/insight_weather/?api_key=$_nasaApiKey&feedtype=json&ver=1.0';
+  static const String _ninjaApiKey = ninjaApiKey;
+  static const String _ninjaApiUrl =
+      'https://api.api-ninjas.com/v1/planets?name=';
 
   static Future<EarthWeather> fetchEarthWeather(String cityName) async {
     final url =
@@ -26,15 +26,18 @@ class ApiService {
     }
   }
 
-  static Future<MarsWeather> fetchMarsWeather() async {
-    final response = await http.get(Uri.parse(_nasaApiUrl));
+  static Future<PlanetWeather> fetchPlanetWeather(String planet) async {
+    final url = '$_ninjaApiUrl$planet';
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {'X-Api-Key': ninjaApiKey});
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final latestData = json['sol_keys'].last;
-      return MarsWeather.fromJson(json['sol'][latestData]);
+      return PlanetWeather.fromJson(json['sol'][latestData]);
     } else {
-      throw Exception('Failed to fetch Mars weather data');
+      throw Exception('Failed to fetch $planet weather data');
     }
   }
 }
