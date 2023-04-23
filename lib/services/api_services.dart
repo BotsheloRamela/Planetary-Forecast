@@ -34,8 +34,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      final latestData = json['sol_keys'].last;
-      return PlanetWeather.fromJson(json['sol'][latestData]);
+      return PlanetWeather.fromJson(json[0]);
     } else {
       throw Exception('Failed to fetch $planet weather data');
     }
