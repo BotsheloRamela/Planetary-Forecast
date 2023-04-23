@@ -160,18 +160,23 @@ class _HomeScreenState extends State<HomeScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: TextField(
+        enableSuggestions: true,
         autocorrect: true,
         controller: cityController,
+        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           iconColor: Colors.white,
           hintStyle: const TextStyle(color: Colors.white),
           hintText: "Search for a city...",
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(15),
           ),
           suffixIcon: IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.search),
+            icon: const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
           ),
         ),
         onSubmitted: (String value) async {
@@ -182,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
               setState(() {
                 searchText = newSearchText;
                 cityName = weather.cityName;
-                temp = weather.temperature.toString();
+                temp = weather.temperature.toInt().toString();
                 main = weather.main;
               });
             }
