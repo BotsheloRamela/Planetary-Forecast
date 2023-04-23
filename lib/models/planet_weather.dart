@@ -1,7 +1,7 @@
 class PlanetWeather {
   final String name;
-  final String mass;
-  final String temperature;
+  final double mass;
+  final double temperature;
 
   PlanetWeather(
       {required this.name,
