@@ -15,15 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
   static String cityName = '';
   static String temp = '';
   static String main = '';
-  String date = DateFormat('MMM d, h:mm a').format(DateTime.now()).toString();
   String bgImageUrl =
       'https://images.unsplash.com/photo-1668995215649-d37e4c4ceec0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=410&q=80';
-
-  void _updateSearchText(String value) {
-    setState(() {
-      cityName = value;
-    });
-  }
+  String searchText = 'Johannesburg';
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const CircularProgressIndicator();
                   }
                 },
-                future: ApiService.fetchWeather("Johannesburg"),
+                future: ApiService.fetchWeather(searchText),
               ),
             ],
           ),
@@ -178,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
           suffixIcon: IconButton(
             onPressed: () {
               setState(() {
-                cityName = cityController.text;
+                searchText = cityController.text;
               });
             },
             icon: const Icon(Icons.search),
@@ -186,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         onSubmitted: (String value) {
           setState(() {
-            cityName = cityController.text;
+            searchText = cityController.text;
           });
         },
       ),
