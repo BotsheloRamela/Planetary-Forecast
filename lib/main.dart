@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:planetary_forecast/providers/earth_weather_provider.dart';
-import 'package:planetary_forecast/providers/mars_weather_provider.dart';
 import 'package:planetary_forecast/screens/home_screen.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
