@@ -12,7 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Planetary Forecast',
+      debugShowCheckedModeBanner: false,
+      title: 'WeatherNow',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple
       ),
