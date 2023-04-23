@@ -39,39 +39,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    Text(
-                      date,
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     //Location
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.location_pin,
-                          color: Colors.white,
-                          size: 15,
-                        ),
-                        const SizedBox(
-                          width: 6,
-                        ),
-                        Text(
-                          cityName,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 16),
-                        ),
-                      ],
+                    Text(
+                      cityName,
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 70,
+                    ),
+                    Text(
+                      "$temp\u2103",
+                      style: const TextStyle(color: Colors.white, fontSize: 80),
+                      textAlign: TextAlign.left,
                     ),
                     Column(
                       children: [
-                        // weatherIcon(),
                         const SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         Text(
                           main,
@@ -80,14 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "$temp\u2103",
-                      style: const TextStyle(color: Colors.white, fontSize: 60),
-                      textAlign: TextAlign.left,
-                    )
                   ],
                 ),
               ),
@@ -119,10 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 200,
       alignment: Alignment.bottomCenter,
       decoration: const BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.only(
-        topRight: Radius.circular(20),
-        topLeft: Radius.circular(20),
-      )),
+            topRight: Radius.circular(20),
+            topLeft: Radius.circular(20),
+          )),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -131,14 +111,16 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 weather.description,
-                style: const TextStyle(color: Colors.white),
               ),
-              Text(weather.temperature.toString(),
-                  style: const TextStyle(color: Colors.white)),
-              Text(weather.humidity.toString(),
-                  style: const TextStyle(color: Colors.white)),
-              Text(weather.windSpeed.toString(),
-                  style: const TextStyle(color: Colors.white))
+              Text(
+                weather.temperature.toString(),
+              ),
+              Text(
+                weather.humidity.toString(),
+              ),
+              Text(
+                weather.windSpeed.toString(),
+              )
             ],
           )
         ],
