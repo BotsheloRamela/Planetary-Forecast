@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cityController = TextEditingController();
   static String cityName = '';
+  static String temp = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 padding: const EdgeInsets.all(20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -49,6 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.white, fontSize: 16),
                         ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "$temp \u2103",
+                      style: const TextStyle(color: Colors.white, fontSize: 80),
+                      textAlign: TextAlign.left,
                     )
                   ],
                 ),
@@ -60,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (weather == null) {
                       return const Text("Error getting weather");
                     } else {
-                      cityName = weather.cityName;
                       return weatherData(weather);
                     }
                   } else {
@@ -75,6 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget weatherData(EarthWeather weather) {
+    cityName = weather.cityName;
+    temp = weather.temperature.toInt().toString();
     return Container(
       height: 200,
       alignment: Alignment.bottomCenter,
