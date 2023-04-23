@@ -55,10 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text(
-                      "$temp \u2103",
-                      style: const TextStyle(color: Colors.white, fontSize: 80),
-                      textAlign: TextAlign.left,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "$temp \u2103",
+                          style: const TextStyle(color: Colors.white, fontSize: 50),
+                          textAlign: TextAlign.left,
+                        )
+                      ],
                     )
                   ],
                 ),
