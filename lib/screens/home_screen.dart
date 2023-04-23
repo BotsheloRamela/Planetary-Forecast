@@ -38,6 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      date,
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       children: [
                         const Icon(
@@ -54,13 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.white, fontSize: 16),
                         ),
                       ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Today, $date",
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     const SizedBox(
                       height: 30,
@@ -152,11 +152,22 @@ class _HomeScreenState extends State<HomeScreen> {
         imgURL = 'https://img.icons8.com/ios/256/sun.png';
         break;
       case "Clear":
-        imgURL = 'https://img.icons8.com/ios/256/cloud.png';
+        imgURL = 'http://openweathermap.org/img/wn/01d@2x.png';
         break;
       case "Rain":
-        imgURL = 'https://img.icons8.com/ios/256/light-rain.png';
+        imgURL = 'http://openweathermap.org/img/wn/10d@2x.png';
         break;
+      case "Thundersorm":
+        imgURL = "http://openweathermap.org/img/wn/11d@2x.png";
+        break;
+      case "Drizzle:":
+        imgURL = 'http://openweathermap.org/img/wn/09d@2x.png';
+        break;
+      case "Snow":
+        imgURL = 'http://openweathermap.org/img/wn/13d@2x.png';
+        break;
+      case "Clouds":
+        imgURL = 'http://openweathermap.org/img/wn/02d@2x.png';
     }
 
     return Image.network(
