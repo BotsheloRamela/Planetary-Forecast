@@ -13,6 +13,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cityController = TextEditingController();
   static String cityName = '';
   static String temp = '';
+  static String main = '';
+  static Icon _icon = const Icon(Icons.sunny);
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +60,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            weatherIcon(),
+                            Text(
+                              "It's $main",
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
+                          ],
+                        ),
                         Text(
-                          "$temp \u2103",
-                          style: const TextStyle(color: Colors.white, fontSize: 50),
+                          "$temp\u2103",
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 50),
                           textAlign: TextAlign.left,
                         )
                       ],
@@ -91,6 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget weatherData(Weather weather) {
     cityName = weather.cityName;
     temp = weather.temperature.toInt().toString();
+    main = weather.main;
     return Container(
       height: 200,
       alignment: Alignment.bottomCenter,
@@ -119,6 +134,27 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
+    );
+  }
+
+  Widget weatherIcon() {
+    String imgURL = '';
+    switch (main) {
+      case 'Sunny':
+        imgURL = 'https://img.icons8.com/ios/256/sun.png';
+        break;
+      case "Clear":
+        imgURL = 'https://img.icons8.com/ios/256/cloud.png';
+        break;
+      case "Rain":
+        imgURL = 'https://img.icons8.com/ios/256/light-rain.png';
+        break;
+    }
+
+    return Image.network(
+      imgURL,
+      width: 50,
+      height: 50,
     );
   }
 }
