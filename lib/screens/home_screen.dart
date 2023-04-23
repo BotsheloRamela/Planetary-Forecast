@@ -18,35 +18,65 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: const Text("Planetary Forecast"),
         ),
-        body: Center(
-          child: FutureBuilder(
-            builder: (context, snapshot) {
-              if (snapshot != null) {
-                EarthWeather? weather = snapshot.data;
-                if (weather == null) {
-                  return const Text("Error getting weather");
-                } else {
-                  return earthWeatherBox(weather);
-                }
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-            future: ApiService.fetchEarthWeather("Johannesburg"),
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+            image: NetworkImage(
+                'https://images.unsplash.com/photo-1496016943515-7d33598c11e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80'),
+            fit: BoxFit.cover,
+          )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FutureBuilder(
+                builder: (context, snapshot) {
+                  if (snapshot != null) {
+                    EarthWeather? weather = snapshot.data;
+                    if (weather == null) {
+                      return const Text("Error getting weather");
+                    } else {
+                      return weatherData(weather);
+                    }
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+                future: ApiService.fetchEarthWeather("Johannesburg"),
+              ),
+            ],
           ),
         ));
   }
 
-  Widget earthWeatherBox(EarthWeather weather) {
-    return Column(
-      children: <Widget>[
-        Text(weather.cityName),
-        Text(weather.description),
-        Text("Temp: ${weather.temperature}"),
-        Text("Humidity: ${weather.humidity}"),
-        Text("Wind Speed: ${weather.windSpeed}")
-      ],
+  Widget weatherData(EarthWeather weather) {
+    return Container(
+      height: 200,
+      alignment: Alignment.bottomCenter,
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20),
+            topLeft: Radius.circular(20),
+          )),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          // Text(weather.cityName),
+          const Text("Weather Today"),
+          const SizedBox(
+            height: 70,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(weather.description),
+              Text(weather.temperature.toString()),
+              Text(weather.humidity.toString()),
+              Text(weather.windSpeed.toString())
+            ],
+          )
+        ],
+      ),
     );
   }
-
 }
