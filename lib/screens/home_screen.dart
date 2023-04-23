@@ -149,34 +149,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  Widget weatherIcon() {
-    String imgURL = '';
-    switch (main) {
-      case 'Sunny':
-      case "Clear":
-        imgURL = 'http://openweathermap.org/img/wn/01d@2x.png';
-        break;
-      case "Rain":
-        imgURL = 'http://openweathermap.org/img/wn/10d@2x.png';
-        break;
-      case "Thundersorm":
-        imgURL = "http://openweathermap.org/img/wn/11d@2x.png";
-        break;
-      case "Drizzle:":
-        imgURL = 'http://openweathermap.org/img/wn/09d@2x.png';
-        break;
-      case "Snow":
-        imgURL = 'http://openweathermap.org/img/wn/13d@2x.png';
-        break;
-      case "Clouds":
-        imgURL = 'http://openweathermap.org/img/wn/02d@2x.png';
-    }
-
-    return Image.network(
-      imgURL,
-      width: 150,
-      height: 150,
-    );
-  }
 }
