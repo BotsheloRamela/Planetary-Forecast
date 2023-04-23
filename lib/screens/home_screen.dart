@@ -73,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       children: <Widget>[
         Text(weather.name),
-        Text(weather.temperature),
-        Text(weather.mass),
+        Text(weather.temperature.toString()),
+        Text(weather.mass.toString()),
       ],
     );
   }
