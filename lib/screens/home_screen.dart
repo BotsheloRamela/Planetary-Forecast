@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        
         appBar: AppBar(
           title: const Text("Planetary Forecast"),
         ),
@@ -106,21 +107,43 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          const Text(
+            "Weather Today",
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                weather.description,
+              Column(
+                children: [
+                  const Text("Humidity"),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "${weather.humidity.toString()}%",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
+                ],
               ),
-              Text(
-                weather.temperature.toString(),
+              Column(
+                children: [
+                  const Text("Wind Speed"),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "${weather.windSpeed.toString()} km/h",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
+                ],
               ),
-              Text(
-                weather.humidity.toString(),
-              ),
-              Text(
-                weather.windSpeed.toString(),
-              )
             ],
           )
         ],
